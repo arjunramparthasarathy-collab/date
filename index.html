@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A tiny question for you 💗</title>
+<style>
+  :root {
+    --cream: #fff8ef;
+    --pink: #ff4f87;
+    --pink-dark: #e73570;
+    --ink: #28222a;
+    --orange: #ffb45c;
+    --lilac: #d9c9ff;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; min-height: 100vh; display: grid; place-items: center;
+    padding: 22px; background: var(--cream); color: var(--ink);
+    font-family: ui-rounded, "Trebuchet MS", system-ui, sans-serif;
+    overflow-x: hidden;
+  }
+  .sparkle { position: fixed; z-index: 0; pointer-events: none; opacity: .7; }
+  .s1 { top: 8%; left: 8%; font-size: 28px; transform: rotate(-15deg); }
+  .s2 { top: 14%; right: 9%; font-size: 24px; }
+  .s3 { bottom: 12%; left: 10%; font-size: 25px; }
+  .s4 { bottom: 9%; right: 8%; font-size: 32px; transform: rotate(12deg); }
+  .card {
+    position: relative; z-index: 1; width: min(100%, 620px);
+    padding: clamp(26px, 6vw, 54px); text-align: center;
+    background: #fffdf9; border: 2px solid var(--ink);
+    border-radius: 30px; box-shadow: 9px 9px 0 var(--ink);
+  }
+  .eyebrow {
+    display: inline-block; background: var(--lilac); border: 1.5px solid var(--ink);
+    border-radius: 999px; padding: 8px 13px; font-size: 11px;
+    letter-spacing: .13em; font-weight: 900; text-transform: uppercase;
+    transform: rotate(-3deg);
+  }
+  h1 { font-size: clamp(2.7rem, 9vw, 5.2rem); line-height: .92; letter-spacing: -.075em; margin: 25px 0 16px; }
+  h1 span { color: var(--pink); }
+  .subtitle { max-width: 390px; margin: 0 auto; font-size: 1.05rem; line-height: 1.6; }
+  .doodle { margin: 22px auto 26px; font-size: 42px; letter-spacing: 9px; }
+  .buttons {
+    position: relative; min-height: 94px; display: flex; align-items: center;
+    justify-content: center; gap: 16px; flex-wrap: wrap; margin: 10px 0 2px;
+  }
+  button {
+    font: inherit; font-weight: 900; border: 2px solid var(--ink); cursor: pointer;
+    border-radius: 17px; padding: 16px 25px; transition: transform .16s ease, box-shadow .16s ease;
+    touch-action: manipulation;
+  }
+  button:focus-visible { outline: 4px solid var(--orange); outline-offset: 4px; }
+  #yes {
+    background: var(--pink); color: white; font-size: 1.3rem;
+    box-shadow: 5px 5px 0 var(--ink); transform: rotate(-2deg);
+  }
+  #yes:hover { transform: translate(-2px,-3px) rotate(1deg); box-shadow: 7px 8px 0 var(--ink); }
+  #no {
+    background: white; color: var(--ink); font-size: 1rem;
+    box-shadow: 4px 4px 0 var(--ink); position: relative; z-index: 2;
+  }
+  #no.running { position: fixed; z-index: 10; }
+  .tiny-note { font-size: .8rem; opacity: .7; margin-top: 18px; }
+  #reveal { display: none; margin-top: 27px; animation: pop .55s cubic-bezier(.2,1.5,.5,1) both; }
+  #reveal.show { display: block; }
+  .reveal-box { border: 2px dashed var(--pink); background: #fff0f5; border-radius: 22px; padding: 22px 18px; }
+  .reveal-box h2 { font-size: clamp(1.8rem, 6vw, 2.7rem); margin: 0 0 10px; letter-spacing: -.05em; }
+  .reveal-box p { line-height: 1.6; margin: 7px auto; max-width: 420px; }
+  .plan { display: grid; gap: 13px; text-align: left; margin-top: 20px; }
+  label { display: block; font-size: .85rem; font-weight: 900; margin-bottom: 6px; }
+  input, select, textarea {
+    width: 100%; padding: 13px 14px; border: 1.5px solid #b9aeb6; border-radius: 12px;
+    background: white; color: var(--ink); font: inherit;
+  }
+  textarea { resize: vertical; min-height: 72px; }
+  .plan-button { width: 100%; background: var(--ink); color: white; margin-top: 17px; box-shadow: 4px 4px 0 var(--orange); }
+  #summary { display: none; text-align: left; white-space: pre-wrap; margin-top: 16px; padding: 15px; border-radius: 14px; background: white; border: 1px solid #f0a8bf; line-height: 1.55; }
+  .hearts { position: fixed; inset: 0; pointer-events: none; z-index: 20; overflow: hidden; }
+  .heart { position: absolute; top: -40px; font-size: 22px; animation: fall 2.6s linear forwards; }
+  @keyframes fall { to { transform: translateY(110vh) rotate(360deg); opacity: 0; } }
+  @keyframes pop { from { opacity: 0; transform: scale(.82) translateY(14px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+  @media (max-width: 430px) {
+    .card { border-radius: 24px; box-shadow: 6px 6px 0 var(--ink); }
+    .buttons { gap: 12px; }
+    button { padding: 15px 20px; }
+    #no.running { max-width: 150px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+  }
+</style>
+</head>
+<body>
+<div class="sparkle s1">✳</div><div class="sparkle s2">✦</div>
+<div class="sparkle s3">♡</div><div class="sparkle s4">✷</div>
+<div class="card">
+  <div class="eyebrow">a very important tiny question</div>
+  <h1>YOU + ME<br>+ A <span>DATE?</span></h1>
+  <p class="subtitle">I have a tiny plan, a suspicious amount of excitement, and one question for you…</p>
+  <div class="doodle" aria-hidden="true">☀️　♡　🌙</div>
+  <div class="buttons" id="buttonZone">
+    <button id="yes" type="button">YES 💗</button>
+    <button id="no" type="button">NO 🙈</button>
+  </div>
+  <p class="tiny-note" id="note">Choose wisely. The little heart is watching. 👀</p>
+
+  <section id="reveal" aria-live="polite">
+    <div class="reveal-box">
+      <div style="font-size:2.2rem;margin-bottom:8px">💌✨💗</div>
+      <h2>EEEE! IT’S A DATE!</h2>
+      <p>I was hoping you’d say yes. 🥹</p>
+      <p><strong>Your only task:</strong> show up as yourself. I’ll take care of the butterflies.</p>
+    </div>
+    <div class="plan">
+      <div><label for="date">When should our little adventure happen?</label><input id="date" type="date"></div>
+      <div><label for="time">Pick our time</label><select id="time"><option value="">Let’s decide together</option><option>Morning sunshine</option><option>Lazy afternoon</option><option>Golden-hour magic</option><option>After-dark adventures</option></select></div>
+      <div><label for="activity">What sounds like us?</label><select id="activity"><option value="">Surprise me</option><option>Coffee + a long chat ☕</option><option>Food hunt 🍜</option><option>Sunset walk 🌅</option><option>Little road trip 🛵</option><option>Arcade / games 🎮</option><option>Dress up and make memories ✨</option></select></div>
+      <div><label for="snack">Mandatory snack / tiny wish</label><textarea id="snack" placeholder="Your favourite snack, a place, or one tiny wish…"></textarea></div>
+    </div>
+    <button class="plan-button" id="makePlan" type="button">MAKE OUR LITTLE PLAN ✨</button>
+    <div id="summary" aria-live="polite"></div>
+    <p class="tiny-note">No pressure to have it all figured out. We can plan it together. 💗</p>
+  </section>
+</div>
+<div class="hearts" id="hearts" aria-hidden="true"></div>
+<script>
+  const yes = document.getElementById('yes');
+  const no = document.getElementById('no');
+  const zone = document.getElementById('buttonZone');
+  const reveal = document.getElementById('reveal');
+  const note = document.getElementById('note');
+  let noMoves = 0;
+
+  function runAway() {
+    if (noMoves === 0) {
+      no.classList.add('running');
+    }
+    noMoves++;
+    const pad = 16;
+    const maxX = Math.max(pad, window.innerWidth - no.offsetWidth - pad);
+    const maxY = Math.max(pad, window.innerHeight - no.offsetHeight - pad);
+    no.style.left = (pad + Math.random() * (maxX - pad)) + 'px';
+    no.style.top = (pad + Math.random() * (maxY - pad)) + 'px';
+    const lines = [
+      "Hehe, catch me first 🙈",
+      "Nope, too slow 😜",
+      "The NO is shy today 💨",
+      "Are you sure? 👀",
+      "I’m on a tiny adventure!"
+    ];
+    note.textContent = lines[(noMoves - 1) % lines.length];
+  }
+  no.addEventListener('pointerenter', runAway);
+  no.addEventListener('click', runAway);
+  no.addEventListener('touchstart', function(e) { e.preventDefault(); runAway(); }, {passive:false});
+
+  function celebrate() {
+    const hearts = document.getElementById('hearts');
+    const emojis = ['💗','💖','💕','✨','💘','🌸'];
+    for (let i = 0; i < 34; i++) {
+      const item = document.createElement('span');
+      item.className = 'heart';
+      item.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+      item.style.left = Math.random() * 100 + 'vw';
+      item.style.animationDelay = Math.random() * 1.1 + 's';
+      item.style.fontSize = (17 + Math.random() * 18) + 'px';
+      hearts.appendChild(item);
+      setTimeout(() => item.remove(), 3500);
+    }
+  }
+  yes.addEventListener('click', () => {
+    reveal.classList.add('show');
+    note.textContent = "Excellent choice. I knew you had excellent taste. 😌💗";
+    yes.textContent = "YES, OBVIOUSLY 💗";
+    yes.disabled = true;
+    no.style.display = 'none';
+    document.getElementById('reveal').scrollIntoView({behavior:'smooth', block:'nearest'});
+    celebrate();
+  });
+
+  document.getElementById('makePlan').addEventListener('click', () => {
+    const date = document.getElementById('date').value;
+    const time = document.getElementById('time').value || "Let's decide together";
+    const activity = document.getElementById('activity').value || "Surprise me";
+    const snack = document.getElementById('snack').value.trim() || "A surprise from you 💗";
+    const dateText = date ? new Date(date + 'T12:00:00').toLocaleDateString(undefined, {weekday:'long', year:'numeric', month:'long', day:'numeric'}) : "Date to be decided";
+    const plan = `💗 IT'S A DATE! 💗\n\nWhen: ${dateText}\nTime: ${time}\nOur vibe: ${activity}\nTiny wish / snack: ${snack}\n\nOfficial plan: spend time together and make a lovely memory. ✨`;
+    const summary = document.getElementById('summary');
+    summary.textContent = plan;
+    summary.style.display = 'block';
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(plan).then(() => {
+        summary.textContent = plan + "\n\n(Copied! Send this little plan to each other 💌)";
+      }).catch(() => {});
+    }
+  });
+</script>
+</body>
+</html>
